@@ -1,7 +1,4 @@
 import requests
-import urllib2
-
-APIKEY = '535907a3817440fc979d623e89a8d3af'
 
 def Main(myfile, lang, apikey):
       with open(myfile) as words:
