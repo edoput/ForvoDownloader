@@ -27,7 +27,7 @@ def Main(myfile, lang, apikey, limit):
                                     with open('pending-pronounciation.txt','a') as out:
                                           out.write(s)
                               else:
-                                    with open('pronuonce_not_found.txt','a') as out:
+                                    with open('word_not_found.txt','a') as out:
                                           out.write(s)
                         
                         n = n+1
@@ -50,7 +50,12 @@ def ForvoHttpRequest(act, word, lang, apikey, limit):
       data = r.json()
       
       if data:
-            if data[u'items'][0][u'pathmp3']:         #Un dizionario in una lista in un dizionario
+            #the JSON is structured like this:
+            #a dictionary with 2 items, their keys are:
+            #-u'attributes' (linked to info about the request we made)
+            #-u'items' (linked to a list of dictionaries)
+            #in the list there is a dictionary for every single pronunciation, in the dictionary we will search for the "mp3path" key
+            if data[u'items'][0][u'pathmp3']:
                   path = data[u'items'][0][u'pathmp3']
             else:
                   print "{0} isn't pronounced yet on Forvo.".format(word, lang)
