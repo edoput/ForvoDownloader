@@ -11,17 +11,18 @@ def Main(myfile, lang, apikey, limit):
                         s = CorrectFormat(i)
                         
                         #let's make the request
-                        r = ForvoHttpRequest('word-pronunciations',s,lang,apikey,limit)
+                        r = ForvoHttpRequest('word-pronunciations',s,lang,apikey)
                         
                         
                         #now we download the mp3 files from forvo server if r is "not-empty"
                         if r:
-                              mp3 = requests.get(r)
-                              file_path = i.replace('\n','')+'.mp3'
-                              with open(file_path,"wb") as out:
-                                    #we open a new mp3 file and we name it after the word we're downloading. The file it's opened in
-                                    #write-binary mode
-                                    out.write(mp3.content)
+                              for i in r:
+                                    mp3 = requests.get(r)
+                                    file_path = i.replace('\n','')+r.index(i)+'.mp3'
+                                    with open(file_path,"wb") as out:
+                                          #we open a new mp3 file and we name it after the word we're downloading. The file it's opened in
+                                          #write-binary mode
+                                          out.write(mp3.content)
                         else:
                               if type(r)==None:
                                     with open('pending-pronounciation.txt','a') as out:
@@ -41,7 +42,7 @@ def CorrectFormat(s):
       return s
                   
         
-def ForvoHttpRequest(act, word, lang, apikey, limit):
+def ForvoHttpRequest(act, word, lang, apikey):
       #This is the url we need to use to send our request, it works when you use the 'word-pronunciations' action
       url = 'http://apifree.forvo.com/action/{0}/format/json/word/{1}/language/{2}/order/rate-desc/limit/{3}/key/{4}'.format(act, word, lang, limit, apikey)
 
@@ -49,18 +50,21 @@ def ForvoHttpRequest(act, word, lang, apikey, limit):
       #r is now  HTTP-request python object and we can use it's method, including reading server's json response
       data = r.json()
       
+      paths = []
+      
       if data:
             #the JSON is structured like this:
             #a dictionary with 2 items, their keys are:
             #-u'attributes' (linked to info about the request we made)
             #-u'items' (linked to a list of dictionaries)
-            #in the list there is a dictionary for every single pronunciation, in the dictionary we will search for the "mp3path" key
-            if data[u'items'][0][u'pathmp3']:
-                  path = data[u'items'][0][u'pathmp3']
+            #in the list there is a dictionary for every single pronunciation, we will search for the "mp3path" key
+            
+            if data[u'items']:
+                  for i in data[u'items']:
+                        paths.append(data[u'items'][i][u'pathmp3'])
             else:
                   print "{0} isn't pronounced yet on Forvo.".format(word, lang)
-                  path = None
       else:
             print "There isn't any JSON"
-            path = ''
-      return path
+            
+      return paths
