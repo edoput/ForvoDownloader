@@ -1,6 +1,8 @@
 ForvoDownloader
 ===============
 
+<p><a href="http://www.forvo.com/" title="Pronunciations by Forvo"><img src="http://api.forvo.com/byforvoblue.gif" width="120" height="40" alt="Pronunciations by Forvo" style="border:0" /></a></p>
+
 This is my first approach to the use of Forvo's API.
 
 The whole project is now defined and ready.
