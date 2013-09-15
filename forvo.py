@@ -16,20 +16,16 @@ def Main(myfile, lang, apikey, limit):
                         
                         #now we download the mp3 files from forvo server if r is "not-empty"
                         if r:
-                              for i in r:
-                                    mp3 = requests.get(r)
-                                    file_path = i.replace('\n','')+r.index(i)+'.mp3'
+                              for t in range(0,limit):
+                                    mp3 = requests.get(r[t])
+                                    file_path = .replace('\n','')+'.{}'.format(t)+'.mp3'
                                     with open(file_path,"wb") as out:
                                           #we open a new mp3 file and we name it after the word we're downloading. The file it's opened in
                                           #write-binary mode
                                           out.write(mp3.content)
                         else:
-                              if type(r)==None:
-                                    with open('pending-pronounciation.txt','a') as out:
-                                          out.write(s)
-                              else:
-                                    with open('word_not_found.txt','a') as out:
-                                          out.write(s)
+                              with open('word_not_found.txt','a') as out:
+                                    out.write(s)
                         
                         n = n+1
 def CorrectFormat(s):
