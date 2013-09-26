@@ -1,6 +1,13 @@
 import requests
 
 def Main(myfile, lang, apikey, limit):
+      with open(apikey) as a:
+        APIKEY=a.read()
+        
+      langUrl = 'http://apifree.forvo.com/key/{0}/format/json/action/language-list/order/name'.format(APIKEY)
+      r = requests.get(langUrl)
+      langList = r.json()
+      
       with open(myfile) as words:
             for i in words:
                   print 'Searching {0}'.format(i)
