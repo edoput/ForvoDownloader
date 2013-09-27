@@ -24,7 +24,7 @@ def Main(lang):
                   #let's make the request
                   r = ForvoHttpRequest('word-pronunciations',s,lang,APIKEY)
 
-                  if r[u'items']:
+                  if r:
                         DownloadMp3(r,limit,i,lang,lang_dir)
                   else:                        
                         file_name = os.path.join(lang_dir,'word_not_found.txt')
