@@ -1,39 +1,38 @@
 import requests
+import os
+from Tkinter import Tk
+from tkFileDialog import askopenfilename
 
-def Main(myfile, lang, apikey, limit):
-      with open(apikey) as a:
+def Main(lang):
+      #APIKEY is stored separately in another file called apikey
+      with open('apikey.txt') as a:
         APIKEY=a.read()
-        
-      langUrl = 'http://apifree.forvo.com/key/{0}/format/json/action/language-list/order/name'.format(APIKEY)
-      r = requests.get(langUrl)
-      langList = r.json()
+
+      myfile = fileChoose()
+      limit = input('How many pronounces for word?\n')
       
       with open(myfile) as words:
-            for i in words:
-                  print 'Searching {0}'.format(i)
             
-                  #here some ceaning in word format and something else
+            home        = os.path.expanduser('~/forvo')
+            lang_dir    = os.path.join(home,lang)
+            
+            for i in words:
+            
+                  #here some cleaning in word format and something else
                   s = CorrectFormat(i)
                   
                   #let's make the request
-                  r = ForvoHttpRequest('word-pronunciations',s,lang,apikey)
-                  
-                  #now we download the mp3 files from forvo server if r is "not-empty"
-                  if r:
-                        print 'Downloading {0}'.format(i)
-                        for i in range(0,limit):
-                              mp3 = requests.get(r[i])
-                              file_path = i.replace('\n','')+'.{0}'+'.mp3'
-                              file_path.format(i)
-                              
-                              with open(file_path,"wb") as out:
-                                    #we open a new mp3 file and we name it after the word we're downloading. The file it's opened in
-                                    #write-binary mode
-                                    out.write(mp3.content)
-                                    
-                  else:
-                        with open('word_not_found.txt','a') as out:
-                              out.write(i + '\n')                        
+                  r = ForvoHttpRequest('word-pronunciations',s,lang,APIKEY)
+
+                  if r[u'items']:
+                        DownloadMp3(r,limit,i,lang,lang_dir)
+                  else:                        
+                        file_name = os.path.join(lang_dir,'word_not_found.txt')
+                        with open(file_name,'a') as out:
+                              out.write(i)
+
+                        
+                                          
                         
 def CorrectFormat(s):
       #here we prepare the string used, removing whitespace and escape character
@@ -46,7 +45,7 @@ def CorrectFormat(s):
       return s
                   
         
-def ForvoHttpRequest(act, word, lang, apikey):
+def ForvoHttpRequest(act, word, lang, apikey, path):
       #This is the url we need to use to send our request, it works when you use the 'word-pronunciations' action
       url = 'http://apifree.forvo.com/action/{0}/format/json/word/{1}/language/{2}/key/{3}'.format(act, word, lang, apikey)
       
@@ -54,21 +53,42 @@ def ForvoHttpRequest(act, word, lang, apikey):
       #r is now HTTP-request python object and we can use it's method, including reading server's json response
       data = r.json()     
       
-      if data:
+      if data[u'items']:
             #we retrieved a non empty JSON.
             #the JSON is structured like this:
             #a dictionary with 2 items, their keys are:
             #-u'attributes' (linked to info about the request we made)
             #-u'items' (linked to a list of dictionaries)
-            #in the list there is a dictionary for every pronunciation, we will search for the "mp3path" key
+            #in the list there is a dictionary for every pronunciation, we will search for the "mp3path"
+            
+            paths = []
             for i in data[u'items']:
-                  #going throgt the list an appending mp3 link to paths
                   paths.append(i[u'pathmp3'])
-                  return paths
+            return paths
                   
       else:
-            #We retrieved an empty JSON beacuse there isn't any pronunciation
             return None
 
-Main('parole_da_trovare.txt','da',APIKEY,1)
+def fileChoose():
+      #show a file choose dialog box
+      Tk().withdraw() # we don't want a full GUI, so keep the root window from appearing
+      filename = askopenfilename() # show an "Open" dialog box and return the path to the selected file
+      return filename
+
+def DownloadMp3(urlList, limit, word, lang, folder):
+      #download a mp3 file, rename it and write it in a costum folder
+      if urlList:
+            for i in range(0,limit):
+                  mp3 = requests.get(urlList[i])                 
+                  
+                  file_name   = word.replace('\n','')+'.{0}'.format(i)+'.mp3'
+                  file_path   = os.path.join(folder, file_name)
+                  
+                  if not os.path.exists(folder):
+                        os.makedirs(folder)              
+                  else:
+                        with open(file_path,"wb") as out:
+                              #we open a new mp3 file and we name it after the word we're downloading.
+                              #The file it's opened in write-binary mode
+                              out.write(mp3.content)
       
