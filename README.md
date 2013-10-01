@@ -15,7 +15,7 @@ The whole project is now defined and ready.
 <ol>
 <li>Get the <a href='https://github.com/EdoPut/ForvoDownloader/blob/master/forvotest.py'>forvotest.py</a> script.</li>
 <li>Get an APIKEY from http://api.forvo.com. You can sign for the free plan which allows you to make 500 requests per day.
-Create a new file name apikey.txt and paste your APIKEY in it, save it and place it in the same folder as the forvo.py script.</li>
+Create a new file name apikey.txt and paste your APIKEY in it, save it and <b>place it in the same folder as the forvotest.py script</b>.</li>
 <li>Get a list of the words you want the script to check for on Forvo. It must be a plain-text file with a word per line.*</li>
 <li>The sintax to execute the script is:
 <pre><code>
