@@ -12,20 +12,18 @@ def Main(lang):
       limit = input('How many pronounces for word?\n')
       
       with open(myfile) as words:
-            
+            #We will create a directory to store downloaded mp3, it will be named /home/user/forvo/...
             home        = os.path.expanduser('~/forvo')
             lang_dir    = os.path.join(home,lang)
             
             for i in words:
             
-                  #here some cleaning in word format and something else
-                  s = CorrectFormat(i)
+                  s = urllib.quote(i)
                   
-                  #let's make the request
                   r = ForvoHttpRequest('word-pronunciations',s,lang,APIKEY)
 
                   if r:
-                        DownloadMp3(r,limit,i,lang,lang_dir)
+                        DownloadMp3(r, limit, i, lang_dir)
                   else:                        
                         file_name = os.path.join(lang_dir,'word_not_found.txt')
                         with open(file_name,'a') as out:
@@ -33,7 +31,7 @@ def Main(lang):
 
                         
                                           
-                        
+#TODO: remove CorrectFormat, replaced by urllib.quote()               
 def CorrectFormat(s):
       #here we prepare the string used, removing whitespace and escape character
       
@@ -75,7 +73,7 @@ def fileChoose():
       filename = askopenfilename() # show an "Open" dialog box and return the path to the selected file
       return filename
 
-def DownloadMp3(urlList, limit, word, lang, folder):
+def DownloadMp3(urlList, limit, word, folder):
       #download a mp3 file, rename it and write it in a costum folder
       if urlList:
             for i in range(0,limit):
