@@ -3,13 +3,12 @@ import os
 from Tkinter import Tk
 from tkFileDialog import askopenfilename
 
-def Main(lang):
+def Main(lang,limit):
       #APIKEY is stored separately in another file called apikey
       with open('apikey.txt') as a:
         APIKEY=a.read()
 
       myfile = fileChoose()
-      limit = input('How many pronounces for word?\n')
       
       with open(myfile) as words:
             #We will create a directory to store downloaded mp3, it will be named /home/user/forvo/...
