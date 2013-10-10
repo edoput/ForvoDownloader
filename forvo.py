@@ -1,8 +1,7 @@
-import os
 import requests
-#import urllib
+import urllib
 
-def ForvoRequest(ACT='word-pronunciations', QUERY, LANG, apikey, FORMAT='mp3' free=TRUE):
+def ForvoRequest(QUERY, LANG, apikey, ACT='word-pronunciations', FORMAT='mp3' free=TRUE):
       # action, default is 'word-pronunciations', query, language, apikey, TRUE if free api(default), FALSE if commercial
       # Return a list of link to mp3 pronunciations for the word QUERY in LANG language.
       # FORMAT='ogg' will return a list of link to ogg pronunciations 
