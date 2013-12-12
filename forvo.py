@@ -7,11 +7,14 @@ def ForvoRequest(QUERY, LANG, apikey, ACT='word-pronunciations', FORMAT='mp3' fr
       # FORMAT='ogg' will return a list of link to ogg pronunciations 
       
       if free:#default
-            base_url = 'http://apifree.forvo.com'
+            base_url = 'http://apifree.forvo.com/'
       else:
             #TODO: add non free base url
-            base_url = 'htttp://api.forvo.com' #is it correct?
+            base_url = 'htttp://api.forvo.com/' #is it correct?
             
+      query_u8 = QUERY
+      query_u8.decode('utf-8')
+      
       key = [
             ('action',ACT),
             ('format','json'),
@@ -20,7 +23,7 @@ def ForvoRequest(QUERY, LANG, apikey, ACT='word-pronunciations', FORMAT='mp3' fr
             ('key',apikey)
             ]
       
-      url = base_url + '/'.join(['%s/%s' % a for a in args if a[1]])
+      url = base_url + '/'.join(['%s/%s' % a for a in key if a[1]])
       
       try:
             r = requests.get(url)

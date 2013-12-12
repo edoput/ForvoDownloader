@@ -14,18 +14,20 @@ This is not an executable file so you need to know at least a little Python to g
 1. Get the [test.py][1] and [forvo.py][2] scripts.
 2. Get an APIKEY from [Forvo][4]. You can sign for the free plan which allows you to make 500 requests per day.
 Create a new file named apikey.txt and paste your APIKEY in it, save it and <b>place it in the same folder as the test.py script</b>.
-3. Get a list of the words you want the script to check for on Forvo. It must be a plain-text file with one word per line.\*
-4. The sintax to execute the script is:
+3. Get a list of the words you want the script to check for on Forvo. It must be a plain-text file with one word per line.[1]
+4. The sintax to execute the test.py is:
+
 ``
-    Main('Language'\*\*,limit)
+    Main('Language'[2],limit)
 ``
+You can find it on the bottom of the script.
 5. Run the test.py script and choose your file from the dialog window.
 6. Search the downloaded files in /user/forvo, there will be a different folder for each language.
 
 
-\*Obviously you can put more than a word per line and it will search for the entire frase and whichever is the top rated will be downloaded, even if it's not the frase you're looking for.
+[1]Obviously you can put more than a word per line and it will search for the entire frase and whichever is the top rated will be downloaded, even if it's not the frase you're looking for.
 
-\*\*Language must be a code from [this list](http://www.forvo.com/languages/alphabetically/). Example: 'English' -> 'en', 'French'  ->'fr'
+[2]Language must be a code from [this list](http://www.forvo.com/languages/alphabetically/). Example: 'English' -> 'en', 'French'  ->'fr'
 To do
 =====
 
