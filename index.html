@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Forvodownloader : Use forvo API to retrieve link to pronunciations in many languages." />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Forvodownloader</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/EdoPut/ForvoDownloader">View on GitHub</a>
+
+          <h1 id="project_title">Forvodownloader</h1>
+          <h2 id="project_tagline">Use forvo API to retrieve link to pronunciations in many languages.</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/EdoPut/ForvoDownloader/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/EdoPut/ForvoDownloader/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a name="forvodownloader" class="anchor" href="#forvodownloader"><span class="octicon octicon-link"></span></a>ForvoDownloader</h1>
+
+<p><a href="http://www.forvo.com/" title="Pronunciations by Forvo"><img src="http://api.forvo.com/byforvoblue.gif" width="120" height="40" alt="Pronunciations by Forvo"></a></p>
+
+<p>This module can be used to retrieve a list of link to pronunciation to a a particular word from Forvo. This module require the <a href="http://docs.python-requests.org/en/latest/" title="Requests latest">Requests module</a> to operate, install it from the python package index  before.</p>
+
+<p>There is only a function to call and it requires 3 arguments, other are default values.</p>
+
+<pre><code>    ```
+    import ForvoDownloader as forvo
+
+    links = forvo.ForvoRequest(QUERY, LANG, apikey, ACT='word-pronunciations', FORMAT='mp3' free=TRUE)
+    ```
+</code></pre>
+
+<ul>
+<li>QUERY</li>
+<li>LANG</li>
+<li>apikey</li>
+</ul><p>are mandatory.</p>
+
+<p>Please feel free to play around and implement other ACTIONS described in the <a href="http://api.forvo.com" title="Forvo API">forvo API docs</a>.</p>
+
+<p>Language must be a code from <a href="http://www.forvo.com/languages/alphabetically/" title="Forvo languages list">this list</a>. Example: 'English' -&gt; 'en', 'French'  -&gt;'fr'</p>
+
+<h1>
+<a name="example" class="anchor" href="#example"><span class="octicon octicon-link"></span></a>Example</h1>
+
+<p>This is not an executable file so you need to know at least a little Python to get thing up and running.
+<strong>This script requires Requests to run. Get requests <a href="http://docs.python-requests.org/en/latest/" title="Requests latest">here</a>.</strong></p>
+
+<ol>
+<li>Get the <a href="/test.py" title="test.py">test.py</a> and <a href="/forvo.py" title="forvo.py">forvo.py</a> scripts.</li>
+<li>Get an APIKEY from <a href="http://api.forvo.com" title="Forvo API">Forvo</a>. You can sign for the free plan which allows you to make 500 requests per day.
+Create a new file named apikey.txt and paste your APIKEY in it, save it and <b>place it in the same folder as the test.py script</b>.</li>
+<li>Get a list of the words you want the script to check for on Forvo. It must be a plain-text file with one word per line.</li>
+<li>The syntax to execute the test.py is: <code>
+        Main('Language',limit)
+</code>
+You can find it on the bottom of the script.</li>
+<li>Run the test.py script and choose your file from the dialog window.</li>
+<li>Search the downloaded files in /user/forvo, there will be a different folder for each language.</li>
+</ol><p>Obviously you can put more than a word per line and it will search for the entire phrase and whichever is the top rated will be downloaded, even if it's not the phrase you're looking for.</p>
+
+<h1>
+<a name="to-do" class="anchor" href="#to-do"><span class="octicon octicon-link"></span></a>To do</h1>
+
+<ul>
+<li>[x] Wrap everything into a separate module</li>
+<li>[ ] Write a wiki</li>
+</ul>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Forvodownloader maintained by <a href="https://github.com/EdoPut">EdoPut</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
