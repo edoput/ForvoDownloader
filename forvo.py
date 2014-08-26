@@ -1,7 +1,7 @@
 import requests
 import urllib
 
-def ForvoRequest(QUERY, LANG, apikey, ACT='word-pronunciations', FORMAT='mp3' free=TRUE):
+def ForvoRequest(QUERY, LANG, apikey, ACT='word-pronunciations', FORMAT='mp3', free= True):
       # action, default is 'word-pronunciations', query, language, apikey, TRUE if free api(default), FALSE if commercial
       # Return a list of link to mp3 pronunciations for the word QUERY in LANG language.
       # FORMAT='ogg' will return a list of link to ogg pronunciations 
@@ -23,7 +23,7 @@ def ForvoRequest(QUERY, LANG, apikey, ACT='word-pronunciations', FORMAT='mp3' fr
             ('key',apikey)
             ]
       
-      url = base_url + '/'.join(['%s/%s' % a for a in key if a[1]])
+      url = base_url + '/'.join(['%s/%s' % a for a in key if a[1]]) + '/'
       
       try:
             r = requests.get(url)
