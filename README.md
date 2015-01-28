@@ -50,5 +50,5 @@ To do
   [1]: /test.py   "test.py"
   [2]: /forvo.py  "forvo.py"
   [3]: http://docs.python-requests.org/en/latest/ "Requests latest"
-  [4]: http://api.forvo.com "Forvo API"
+  [4]: http://api.forvo.com/documentation/ "Forvo API Documentation"
   [5]: http://www.forvo.com/languages/alphabetically/ "Forvo languages list"
